@@ -23,22 +23,27 @@ class _ProductState extends State<ProductWidget>{
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      child: Row(
-        children: [
-          Text(
-            widget.title,
-            style: TextStyle(fontSize: 20)
-          ),
-          const Padding(padding: EdgeInsets.all(2)),
-          ElevatedButton(onPressed: _incrementCounter, child: const Text("-1")),
-          const Padding(padding: EdgeInsets.all(2)),
-          ElevatedButton(onPressed: _incrementCounter, child: const Text("+1")),
-          const Padding(padding: EdgeInsets.all(2)),
-          Text(
-              '$count',
-              style: TextStyle(fontSize: 20)
-          )
-        ],
+      alignment: Alignment.centerLeft,
+      child: SingleChildScrollView (
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+                widget.title,
+                style: const TextStyle(fontSize: 20)
+            ),
+            const Padding(padding: EdgeInsets.all(2)),
+            ElevatedButton(onPressed: _incrementCounter, child: const Text("-1")),
+            const Padding(padding: EdgeInsets.all(2)),
+            ElevatedButton(onPressed: _incrementCounter, child: const Text("+1")),
+            const Padding(padding: EdgeInsets.all(2)),
+            Text(
+                '$count',
+                style: TextStyle(fontSize: 20)
+            )
+          ],
+        ),
       )
     );
   }
