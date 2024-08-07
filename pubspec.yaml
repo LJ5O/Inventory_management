@@ -1,5 +1,5 @@
-name: inventory_management
-description: Gestion des stocks simpl
+name: Inventaire
+description: Gestion des stocks simple pour les fruits et légumes
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
