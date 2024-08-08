@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Inventaire/widgets/product.dart';
+import 'package:inventaire/widgets/product.dart';
 
 void main() {
   runApp(const MyApp());

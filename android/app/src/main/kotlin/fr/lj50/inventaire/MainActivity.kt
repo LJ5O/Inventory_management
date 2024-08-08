@@ -1,4 +1,4 @@
-package fr.LJ5O.inventory_management
+package fr.lj50.inventaire
 
 import io.flutter.embedding.android.FlutterActivity
 

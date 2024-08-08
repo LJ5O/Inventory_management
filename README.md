@@ -1,6 +1,6 @@
-# inventory_management
+# inventaire
 
-Gestion des stocks simpl
+Inventory management
 
 ## Getting Started
 

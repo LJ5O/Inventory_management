@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.LJ5O.inventory_management">
+    package="fr.lj50.inventaire">
    <application
-        android:label="inventory_management"
+        android:label="Légumes de Brouckerque"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
