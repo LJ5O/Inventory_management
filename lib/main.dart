@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventaire/routes/products_list.dart';
-import 'package:inventaire/widgets/product.dart';
+import 'package:inventaire/routes/products_list_route.dart';
 
 void main() {
   runApp(const MyApp());
