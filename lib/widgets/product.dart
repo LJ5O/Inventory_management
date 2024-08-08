@@ -19,6 +19,14 @@ class _ProductState extends State<ProductWidget>{
     });
   }
 
+  _decrementCounter(){
+    setState(() {
+      if(count>0){
+        count--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +42,7 @@ class _ProductState extends State<ProductWidget>{
                 style: const TextStyle(fontSize: 20)
             ),
             const Padding(padding: EdgeInsets.all(2)),
-            ElevatedButton(onPressed: _incrementCounter, child: const Text("-1")),
+            ElevatedButton(onPressed: _decrementCounter, child: const Text("-1")),
             const Padding(padding: EdgeInsets.all(2)),
             ElevatedButton(onPressed: _incrementCounter, child: const Text("+1")),
             const Padding(padding: EdgeInsets.all(2)),
