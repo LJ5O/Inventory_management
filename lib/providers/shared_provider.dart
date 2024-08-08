@@ -21,7 +21,7 @@ class StorageService {
 
   Future<String?> getString(String key) async {
     final prefs = await _getPrefs();
-    return prefs.getString(key);
+    return prefs.getString(key) ?? "";
   }
 
   Future<void> setInt(String key, int value) async {
@@ -29,9 +29,9 @@ class StorageService {
     await prefs.setInt(key, value);
   }
 
-  Future<int?> getInt(String key) async {
+  Future<int> getInt(String key) async {
     final prefs = await _getPrefs();
-    return prefs.getInt(key);
+    return prefs.getInt(key) ?? 0;
   }
 
   Future<void> setBool(String key, bool value) async {
@@ -39,9 +39,9 @@ class StorageService {
     await prefs.setBool(key, value);
   }
 
-  Future<bool?> getBool(String key) async {
+  Future<bool> getBool(String key) async {
     final prefs = await _getPrefs();
-    return prefs.getBool(key);
+    return prefs.getBool(key) ?? false;
   }
 
   Future<void> setDouble(String key, double value) async {
@@ -49,9 +49,9 @@ class StorageService {
     await prefs.setDouble(key, value);
   }
 
-  Future<double?> getDouble(String key) async {
+  Future<double> getDouble(String key) async {
     final prefs = await _getPrefs();
-    return prefs.getDouble(key);
+    return prefs.getDouble(key) ?? 0.0;
   }
 
   Future<void> setStringList(String key, List<String> value) async {
@@ -59,9 +59,9 @@ class StorageService {
     await prefs.setStringList(key, value);
   }
 
-  Future<List<String>?> getStringList(String key) async {
+  Future<List<String>> getStringList(String key) async {
     final prefs = await _getPrefs();
-    return prefs.getStringList(key);
+    return prefs.getStringList(key) ?? <String>[];
   }
 
   // Delete key

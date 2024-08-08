@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:inventaire/widgets/products_editor.dart';
 
 class SettingsRoute extends StatefulWidget{
   const SettingsRoute({super.key});
@@ -28,27 +29,16 @@ class _SettingsRouteState extends State<SettingsRoute> {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              const Text("Fruits"),
-              const Text("Légumes"),
-              ReorderableListView(
-                onReorder: (int oldIndex, int newIndex){
-                  setState(() {
-                    //TODO
-                  });
-                },
-                children: <Widget>[
-                  for(int index = 0; index<5; index ++)
-                    ListTile(
-                        key: Key("$index"),
-                        title: Text("$index"),
-                      trailing: ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
-                      ),
-                    )
-                  ],
+              ProductsEditor(
+                productType: "fruits"
+              ),
+              ProductsEditor(
+                  productType: "vegetables"
+              ),
+              ProductsEditor(
+                  productType: "others"
               )
             ],
           )
