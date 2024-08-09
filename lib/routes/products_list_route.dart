@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inventaire/routes/settings_route.dart';
+import 'package:inventaire/widgets/products_viewer.dart';
 
 import '../widgets/product.dart';
 
@@ -25,6 +26,7 @@ class _ProductsListRouteState extends State<ProductsListRoute> {
       child: Scaffold(
           appBar: AppBar(
             title: Text(widget.title),
+            backgroundColor: Colors.green,
             actions: [
               IconButton(
                   icon: const Icon(Icons.settings),
@@ -42,39 +44,14 @@ class _ProductsListRouteState extends State<ProductsListRoute> {
               ],
             ),
           ),
-          body: TabBarView(
-            children: [SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const <Widget>[
-                    ProductWidget(
-                      title: "Pomme",
-                    ),
-                  ],
-                )
-            ),
-              SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const <Widget>[
-                      ProductWidget(
-                        title: "Carrote",
-                      ),
-                    ],
-                  )
-              ),
-              SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const <Widget>[
-                      ProductWidget(
-                        title: "Champignons",
-                      ),
-                    ],
-                  )
-              )],
+          body: const TabBarView(
+            children: [
+              ProductsViewer(productType: "fruits"),
+              ProductsViewer(productType: "vegetables"),
+              ProductsViewer(productType: "others"),
+              ],
           )
-      ),
+      )
     );
   }
 }

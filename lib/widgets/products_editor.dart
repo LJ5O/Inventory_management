@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:inventaire/providers/shared_provider.dart';
 
@@ -109,7 +107,8 @@ class _ProductsEditorState extends State<ProductsEditor>{
                 const Text("Aucun élément n'est dans cette liste."),
                 ElevatedButton(
                     onPressed: (){_showAddProductDialog(context);},
-                    child: const Text("Ajouter")
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    child: const Text("Ajouter", style: TextStyle(color: Colors.white)),
                 )
               ],
             )
@@ -121,7 +120,8 @@ class _ProductsEditorState extends State<ProductsEditor>{
                 onPressed: () {
                   _showAddProductDialog(context);
                 },
-                child: const Text("Ajouter un produit"),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                child: const Text("Ajouter un produit", style: TextStyle(color: Colors.white))
               ),
               Expanded(
                 child: ReorderableListView(
@@ -141,7 +141,7 @@ class _ProductsEditorState extends State<ProductsEditor>{
                         leading: ElevatedButton(
                           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                           onPressed: (){_removeProduct(index, products);},
-                          child: const Icon(Icons.delete_forever)
+                          child: const Icon(Icons.delete_forever, color: Colors.white,)
                         ),
                       ),
                   ],
