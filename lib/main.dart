@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const ProductsListRoute(title: 'Légumes de Brouckerque'),
+      home: const ProductsListRoute(title: 'Légumes du potager'),
     );
   }
 }

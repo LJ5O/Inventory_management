@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inventaire/routes/settings_route.dart';
 import 'package:inventaire/widgets/products_viewer.dart';
 
-import '../widgets/product.dart';
-
 class ProductsListRoute extends StatefulWidget {
   const ProductsListRoute({super.key, required this.title});
 
