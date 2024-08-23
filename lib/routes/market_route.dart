@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:inventaire/widgets/products_editor.dart';
 import 'package:inventaire/widgets/products_reset.dart';
 import 'package:inventaire/widgets/products_sales.dart';
-import 'package:inventaire/widgets/products_viewer.dart';
 
 class MarketRoute extends StatefulWidget{
   const MarketRoute({super.key});
