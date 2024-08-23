@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inventaire/widgets/products_editor.dart';
+import 'package:inventaire/widgets/products_reset.dart';
+import 'package:inventaire/widgets/products_sales.dart';
 import 'package:inventaire/widgets/products_viewer.dart';
 
 class MarketRoute extends StatefulWidget{
@@ -17,7 +19,7 @@ class _MarketRouteState extends State<MarketRoute> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 4,
       child: Scaffold(
           appBar: AppBar(
             title: const Text("Marché"),
@@ -26,21 +28,23 @@ class _MarketRouteState extends State<MarketRoute> {
               tabs: [
                 Tab(text: "Fruits", icon: FaIcon(FontAwesomeIcons.appleWhole)),
                 Tab(text: "Légumes", icon: FaIcon(FontAwesomeIcons.carrot)),
-                Tab(text: "Autres", icon: FaIcon(FontAwesomeIcons.warehouse))
+                Tab(text: "Autres", icon: FaIcon(FontAwesomeIcons.warehouse)),
+                Tab(text: "Gérer", icon: FaIcon(FontAwesomeIcons.wrench))
               ],
             ),
           ),
           body: const TabBarView(
             children: [
-              ProductsViewer(
+              ProductsMarket(
                 productType: "fruits"
               ),
-              ProductsViewer(
+              ProductsMarket(
                   productType: "vegetables"
               ),
-              ProductsViewer(
+              ProductsMarket(
                   productType: "others"
-              )
+              ),
+              ProductsReset()
             ],
           )
       ),
