@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../providers/shared_provider.dart';
 
-class ProductsReset extends StatelessWidget{
-  const ProductsReset({super.key});
+class ProductsSalesReset extends StatelessWidget{
+  const ProductsSalesReset({super.key});
 
   Future<void> resetSalesProducts(bool removeFromInventory) async {
     //This function is used to reset all counters in sales route
