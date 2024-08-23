@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:inventaire/routes/market_route.dart';
 import 'package:inventaire/routes/settings_route.dart';
 import 'package:inventaire/widgets/products_viewer.dart';
 
@@ -26,6 +27,11 @@ class _ProductsListRouteState extends State<ProductsListRoute> {
             title: Text(widget.title),
             backgroundColor: Colors.green,
             actions: [
+              IconButton(
+                onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>const MarketRoute() ));},
+                icon: const Icon(Icons.shopping_basket),
+                tooltip: "Sur le marché",
+              ),
               IconButton(
                   icon: const Icon(Icons.settings),
                   tooltip: "Paramètres de l'application",
