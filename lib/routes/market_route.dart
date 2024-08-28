@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:inventaire/widgets/products_sales_reset.dart';
+import 'package:inventaire/widgets/products_sales_settings.dart';
 import 'package:inventaire/widgets/products_sales.dart';
 
 class MarketRoute extends StatefulWidget{
@@ -42,7 +42,7 @@ class _MarketRouteState extends State<MarketRoute> {
               ProductsMarket(
                   productType: "others"
               ),
-              ProductsSalesReset()
+              ProductsSalesSettings()
             ],
           )
       ),
