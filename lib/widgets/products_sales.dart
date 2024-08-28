@@ -116,7 +116,8 @@ class _ProductsMarketState extends State<ProductsMarket> {
             ],
           ),
           subtitle: numberOfItemsStillInStock<=lowStockThreshold ?
-            Text("Il n'y a plus que $numberOfItemsStillInStock objets en stock !", style:const TextStyle(color: Colors.red)) : null,
+            Text("Il n'y a plus que $numberOfItemsStillInStock objets en stock !", style:const TextStyle(color: Colors.red)) :
+            Text("Il reste $numberOfItemsStillInStock objets en stock."),
         );
       },
     );
