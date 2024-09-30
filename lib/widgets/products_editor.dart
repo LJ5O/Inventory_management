@@ -29,6 +29,15 @@ class _ProductsEditorState extends State<ProductsEditor>{
     await storage.setStringList(widget.productType, products);
   }
 
+  void _sortProductsAlphabetically(List<String> products) async {
+    setState(() {
+      products.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    });
+
+    // Save sorted list
+    await storage.setStringList(widget.productType, products);
+  }
+
   void _addProduct(String productName, List<String> products) async {
     setState(() {
       products.insert(0, productName);
@@ -147,6 +156,11 @@ class _ProductsEditorState extends State<ProductsEditor>{
                   ],
                 ),
               ),
+              ElevatedButton(
+                  onPressed: (){_sortProductsAlphabetically(products);},
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                  child: const Text("Tri alphabétique", style: TextStyle(color: Colors.white),)
+              )
             ],
           );
         }
