@@ -15,6 +15,7 @@ class _ProductsEditorState extends State<ProductsEditor>{
 
   StorageService storage = StorageService();
   List<String> products = [];
+  Map<String, String> savedUnits = {};
 
   void _updateProductList(int oldIndex, int newIndex, List<String> products) async {
     setState(() {
@@ -52,6 +53,23 @@ class _ProductsEditorState extends State<ProductsEditor>{
     });
     // Saving the new list behind the scenes
     await storage.setStringList(widget.productType, products);
+  }
+
+  void _setProductUnit(String productName, String unitType) async {
+    setState(() {
+      savedUnits[productName] = unitType;
+    });
+
+    await storage.setString('${widget.productType}_${productName}_unit', unitType);
+  }
+
+  Future<Map<String, String>> _loadUnits(List<String> products) async {
+    Map<String, String> units = {};
+    for (String product in products) {
+      String? unit = await storage.getString('${widget.productType}_${product}_unit');
+      units[product] = (unit=="" ? 'Unités' : (unit ?? 'Unités')); // Default unit. 'Unité' if "" or null received
+    }
+    return units;
   }
 
   void _showAddProductDialog(BuildContext context) {
@@ -123,45 +141,71 @@ class _ProductsEditorState extends State<ProductsEditor>{
             )
           );
         }else{
-          return Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  _showAddProductDialog(context);
-                },
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                child: const Text("Ajouter un produit", style: TextStyle(color: Colors.white))
-              ),
-              Expanded(
-                child: ReorderableListView(
-                  onReorder: (int oldIndex, int newIndex) {
-                    _updateProductList(oldIndex, newIndex, products);
-                  },
-                  children: <Widget>[
-                    for (int index = 0; index < products.length; index++)
-                      ListTile(
-                        key: Key(products[index]),
-                        title: Text(products[index]),
-                        tileColor: index.isOdd ? oddItemColor : evenItemColor,
-                        trailing: ReorderableDragStartListener(
-                          index: index,
-                          child: const Icon(Icons.drag_handle),
-                        ),
-                        leading: ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                          onPressed: (){_removeProduct(index, products);},
-                          child: const Icon(Icons.delete_forever, color: Colors.white,)
-                        ),
+          return FutureBuilder(
+              future: _loadUnits(products), 
+              builder: (BuildContext context, AsyncSnapshot<Map<String, String>> snapshot){
+                savedUnits = snapshot.data ?? {};
+                return Column(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          _showAddProductDialog(context);
+                        },
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                        child: const Text("Ajouter un produit", style: TextStyle(color: Colors.white))
+                    ),
+                    Expanded(
+                      child: ReorderableListView(
+                        onReorder: (int oldIndex, int newIndex) {
+                          _updateProductList(oldIndex, newIndex, products);
+                        },
+                        children: <Widget>[
+                          for (int index = 0; index < products.length; index++)
+                            ListTile(
+                              key: Key(products[index]),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(products[index]),
+                                  DropdownButton<String>(
+                                    value: savedUnits[products[index]] ?? 'Unités',
+                                    onChanged: (String? newValue) {
+                                      if (newValue != null) {
+                                        _setProductUnit(products[index], newValue);
+                                      }
+                                    },
+                                    items: <String>['Unités', 'g', 'Kg', 'Caisses'] // Options list
+                                        .map<DropdownMenuItem<String>>((String value) { // For each element, the map function, that will returns DropDownMenuItem runs a function
+                                      return DropdownMenuItem<String>( //This function is called on each string and transforms string into Drowdown element
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),//We make a list with new elements
+                                  ),
+                                ],
+                              ),
+                              tileColor: index.isOdd ? oddItemColor : evenItemColor,
+                              trailing: ReorderableDragStartListener(
+                                index: index,
+                                child: const Icon(Icons.drag_handle),
+                              ),
+                              leading: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                  onPressed: (){_removeProduct(index, products);},
+                                  child: const Icon(Icons.delete_forever, color: Colors.white,)
+                              ),
+                            ),
+                        ],
                       ),
+                    ),
+                    ElevatedButton(
+                        onPressed: (){_sortProductsAlphabetically(products);},
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                        child: const Text("Tri alphabétique", style: TextStyle(color: Colors.white),)
+                    )
                   ],
-                ),
-              ),
-              ElevatedButton(
-                  onPressed: (){_sortProductsAlphabetically(products);},
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                  child: const Text("Tri alphabétique", style: TextStyle(color: Colors.white),)
-              )
-            ],
+                );
+              }
           );
         }
       }
