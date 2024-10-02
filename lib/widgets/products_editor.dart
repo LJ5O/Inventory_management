@@ -166,7 +166,7 @@ class _ProductsEditorState extends State<ProductsEditor>{
                               title: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(products[index]),
+                                  Expanded(child: Text(products[index])),
                                   DropdownButton<String>(
                                     value: savedUnits[products[index]] ?? 'Unités',
                                     onChanged: (String? newValue) {
