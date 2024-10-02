@@ -16,6 +16,7 @@ class _ProductsMarketState extends State<ProductsMarket> {
   Map<String, int> productCounts = {};
   Map<String, int> inStockProductsCount = {};
   int lowStockThreshold = 0;
+  Map<String, String> units = {};
 
   @override
   void initState() {
@@ -27,12 +28,16 @@ class _ProductsMarketState extends State<ProductsMarket> {
     List<String> savedProducts = await storage.getStringList(widget.productType);
     Map<String, int> savedCounts = {};
     Map<String, int> savedStockCounts = {};
+    Map<String, String> savedUnits = {};
 
     for (String product in savedProducts) {
       int count = await storage.getInt('${widget.productType}_${product}_sales');
       savedCounts[product] = count;
       int count2 = await storage.getInt('${widget.productType}_$product');
       savedStockCounts[product] = count2;
+
+      String unit = await storage.getString('${widget.productType}_${product}_unit') ?? ""; // Valid value or ""
+      savedUnits[product] = unit=="" ? 'Unités' : unit;// Default if value is ""
     }
 
     int lowStockThreshold = await storage.getInt("low_stock_threshold");
@@ -42,11 +47,16 @@ class _ProductsMarketState extends State<ProductsMarket> {
       productCounts = savedCounts;
       inStockProductsCount = savedStockCounts;
       this.lowStockThreshold = lowStockThreshold;
+      units = savedUnits;
     });
   }
 
   int _getItemCount(String item) {
     return productCounts[item] ?? 0;
+  }
+
+  String _getItemUnit(String item) {
+    return units[item] ?? 'Unités';
   }
 
   int _getStockItemCount(String item) {
@@ -87,6 +97,7 @@ class _ProductsMarketState extends State<ProductsMarket> {
         String product = products[index];
         int count = _getItemCount(product);
         int numberOfItemsStillInStock = _getStockItemCount(product) - count;
+        String unit = _getItemUnit(product);
 
         return ListTile(
           key: Key(product),
@@ -96,8 +107,8 @@ class _ProductsMarketState extends State<ProductsMarket> {
           ),
           tileColor: index.isOdd ? oddItemColor : evenItemColor,
           leading: Text(
-            "$count",
-            textScaler: const TextScaler.linear(1.8),
+            "$count $unit",
+            textScaler: const TextScaler.linear(1.5),
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -116,8 +127,8 @@ class _ProductsMarketState extends State<ProductsMarket> {
             ],
           ),
           subtitle: numberOfItemsStillInStock<=lowStockThreshold ?
-            Text("Il n'y a plus que $numberOfItemsStillInStock objets en stock !", style:const TextStyle(color: Colors.red)) :
-            Text("Il reste $numberOfItemsStillInStock objets en stock."),
+            Text("Il n'y a plus que $numberOfItemsStillInStock $unit en stock !", style:const TextStyle(color: Colors.red)) :
+            Text("Il reste $numberOfItemsStillInStock $unit en stock."),
         );
       },
     );

@@ -14,6 +14,7 @@ class _ProductsViewerState extends State<ProductsViewer> {
   StorageService storage = StorageService();
   List<String> products = [];
   Map<String, int> productCounts = {};
+  Map<String, String> units = {};
 
   @override
   void initState() {
@@ -24,20 +25,28 @@ class _ProductsViewerState extends State<ProductsViewer> {
   Future<void> _loadProductCounts() async {
     List<String> savedProducts = await storage.getStringList(widget.productType);
     Map<String, int> savedCounts = {};
+    Map<String, String> savedUnits = {};
 
     for (String product in savedProducts) {
       int count = await storage.getInt('${widget.productType}_$product');
+      String unit = await storage.getString('${widget.productType}_${product}_unit') ?? ""; // Valid value or ""
       savedCounts[product] = count;
+      savedUnits[product] = unit=="" ? 'Unités' : unit;// Default if value is ""
     }
 
     setState(() {
       products = savedProducts;
       productCounts = savedCounts;
+      units = savedUnits;
     });
   }
 
   int _getItemCount(String item) {
     return productCounts[item] ?? 0;
+  }
+
+  String _getItemUnits(String item) {
+    return units[item] ?? "Unités";
   }
 
   Future<void> _addOneItemCount(String item) async {
@@ -73,6 +82,7 @@ class _ProductsViewerState extends State<ProductsViewer> {
         itemBuilder: (BuildContext context, int index) {
         String product = products[index];
         int count = _getItemCount(product);
+        String unit = _getItemUnits(product);
 
         return ListTile(
           key: Key(product),
@@ -82,8 +92,8 @@ class _ProductsViewerState extends State<ProductsViewer> {
           ),
           tileColor: index.isOdd ? oddItemColor : evenItemColor,
           leading: Text(
-            "$count",
-            textScaler: const TextScaler.linear(1.8),
+            "$count $unit",
+            textScaler: const TextScaler.linear(1.5),
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
