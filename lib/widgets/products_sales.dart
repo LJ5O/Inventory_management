@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventaire/providers/shared_provider.dart';
+import 'package:inventaire/widgets/count_display.dart';
 
 class ProductsMarket extends StatefulWidget {
   const ProductsMarket({super.key, required this.productType});
@@ -70,6 +71,14 @@ class _ProductsMarketState extends State<ProductsMarket> {
     await storage.setInt('${widget.productType}_${item}_sales', productCounts[item]!);
   }
 
+  Future<void> _setItemCount(String item, int count) async {
+    print("PING $count");
+    setState(() {
+      productCounts[item] = count;
+    });
+    await storage.setInt('${widget.productType}_${item}_sales', productCounts[item]!);
+  }
+
   Future<void> _removeOneItemCount(String item) async {
     setState(() {
       if (productCounts[item] != null && productCounts[item]! > 0) {
@@ -106,9 +115,10 @@ class _ProductsMarketState extends State<ProductsMarket> {
             textScaler: const TextScaler.linear(1.3),
           ),
           tileColor: index.isOdd ? oddItemColor : evenItemColor,
-          leading: Text(
-            "$count $unit",
-            textScaler: const TextScaler.linear(1.5),
+          leading: CountDisplay(
+              count: count,
+              unit: unit,
+              onCountChanged: (int value)=>_setItemCount(product, value)
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,

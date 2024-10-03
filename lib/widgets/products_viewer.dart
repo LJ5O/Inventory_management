@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventaire/providers/shared_provider.dart';
+import 'package:inventaire/widgets/count_display.dart';
 
 class ProductsViewer extends StatefulWidget {
   const ProductsViewer({super.key, required this.productType});
@@ -49,6 +50,13 @@ class _ProductsViewerState extends State<ProductsViewer> {
     return units[item] ?? "Unités";
   }
 
+  Future<void> _setItemCount(String item, int count) async {
+    setState(() {
+      productCounts[item] = count;
+    });
+    await storage.setInt('${widget.productType}_$item', productCounts[item]!);
+  }
+
   Future<void> _addOneItemCount(String item) async {
     setState(() {
       productCounts[item] = (productCounts[item] ?? 0) + 1;
@@ -91,9 +99,10 @@ class _ProductsViewerState extends State<ProductsViewer> {
             textScaler: const TextScaler.linear(1.3),
           ),
           tileColor: index.isOdd ? oddItemColor : evenItemColor,
-          leading: Text(
-            "$count $unit",
-            textScaler: const TextScaler.linear(1.5),
+          leading: CountDisplay(
+              count: count,
+              unit: unit,
+              onCountChanged: (int value)=>_setItemCount(product, value)
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
