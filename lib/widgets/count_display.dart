@@ -86,7 +86,7 @@ class _CountDisplayState extends State<CountDisplay> {
       },
       child: Text(
         "${widget.count} ${widget.unit}",
-        textScaler: const TextScaler.linear(1.5),
+        textScaler: const TextScaler.linear(1.2),
       ),
     );
   }

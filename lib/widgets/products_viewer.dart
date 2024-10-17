@@ -96,7 +96,7 @@ class _ProductsViewerState extends State<ProductsViewer> {
           key: Key(product),
           title: Text(
             product,
-            textScaler: const TextScaler.linear(1.3),
+            textScaler: const TextScaler.linear(0.9),
           ),
           tileColor: index.isOdd ? oddItemColor : evenItemColor,
           leading: CountDisplay(
