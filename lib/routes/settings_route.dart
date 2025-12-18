@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:inventaire/widgets/app_settings.dart';
 import 'package:inventaire/widgets/products_editor.dart';
 
 class SettingsRoute extends StatefulWidget{
@@ -16,7 +17,7 @@ class _SettingsRouteState extends State<SettingsRoute> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 4,
       child: Scaffold(
           appBar: AppBar(
             title: const Text("Paramètres"),
@@ -25,7 +26,8 @@ class _SettingsRouteState extends State<SettingsRoute> {
               tabs: [
                 Tab(text: "Fruits", icon: FaIcon(FontAwesomeIcons.appleWhole)),
                 Tab(text: "Légumes", icon: FaIcon(FontAwesomeIcons.carrot)),
-                Tab(text: "Autres", icon: FaIcon(FontAwesomeIcons.warehouse))
+                Tab(text: "Autres", icon: FaIcon(FontAwesomeIcons.warehouse)),
+                Tab(text: "Gérer", icon: FaIcon(FontAwesomeIcons.wrench),)
               ],
             ),
           ),
@@ -39,7 +41,8 @@ class _SettingsRouteState extends State<SettingsRoute> {
               ),
               ProductsEditor(
                   productType: "others"
-              )
+              ),
+              AppSettings()
             ],
           )
       ),
