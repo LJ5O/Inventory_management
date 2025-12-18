@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../providers/shared_provider.dart';
@@ -17,10 +15,10 @@ class _AppSettingsState extends State<AppSettings> {
   int pushCount = 0;
   static const int NUMBER_OF_CLICKS_TO_RESET = 5;
 
-  void resetStorage(){
+  void resetStorage(StorageService storage){
     if( pushCount >= NUMBER_OF_CLICKS_TO_RESET) {
       //OK, reset values
-      // RESET
+      storage.clear(); // ;-;
 
       Fluttertoast.showToast(msg: "L'application a été remise à zéro!", toastLength: Toast.LENGTH_LONG);
 
@@ -31,7 +29,7 @@ class _AppSettingsState extends State<AppSettings> {
       final remainingClicks = NUMBER_OF_CLICKS_TO_RESET - pushCount;
 
       Fluttertoast.showToast(
-        msg: "Appuyez encore $remainingClicks fois pour confirmer et supprimer toutes les données.",
+        msg: "Appuyez encore $remainingClicks fois pour tout supprimer.",
         toastLength: Toast.LENGTH_SHORT
       );
       pushCount++;
@@ -55,7 +53,7 @@ class _AppSettingsState extends State<AppSettings> {
         ),
         ElevatedButton(
           onPressed: () {
-            resetStorage();
+            resetStorage(storage);
           },
           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
           child: const Text(
